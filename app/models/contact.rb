@@ -10,9 +10,9 @@ class Contact < ActiveRecord::Base
   def reach_out
     case user.reach_out_platform
       when "Email"
-        Misc.send_mail(user, contact.email, "It's been a while...",user.automated_message)
+        Misc.send_mail(user, email, "It's been a while...",user.automated_message)
       when "Twitter"
-        Misc.send_dm(self, contact)
+        Misc.send_dm(self, contact, user.automated_message)
     end
   end
 

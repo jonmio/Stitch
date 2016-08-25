@@ -11,7 +11,7 @@ class Misc < ActiveRecord::Base
 
     true
   end
-  
+
   def self.send_tweet(user, message)
     user.twitter_client.update(message)
   end

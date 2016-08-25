@@ -14,8 +14,8 @@ class User < ActiveRecord::Base
 # create twitter client to authenticate
   def twitter_client
     client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = ENV["twitter_consumer_key"]
-      config.consumer_secret     = ENV["twitter_consumer_secret"]
+      config.consumer_key        = ENV["TWITTER_CONSUMER_KEY"]
+      config.consumer_secret     = ENV["TWITTER_CONSUMER_SECRET"]
       config.access_token        = self.token
       config.access_token_secret = self.secret
     end
@@ -115,8 +115,10 @@ class User < ActiveRecord::Base
   def check_overdue
     contacts.each do |contact|
       if contact.thirty_days?
+        binding.pry
         contact.reach_out
       elsif contact.twenty_nine_days?
+        binding.pry
         self.remind(contact)
       end
     end

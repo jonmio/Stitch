@@ -1,6 +1,33 @@
 #Class for misc. functions
 class Misc < ActiveRecord::Base
 
+  def self.refresh_master_token
+    response = RestClient.post 'https://accounts.google.com/o/oauth2/token', :grant_type => 'refresh_token', :refresh_token => ENV['MASTER_REFRESH'], :client_id => ENV['CLIENT'], :client_secret => ENV['CLIENT_SECRET']
+    refresh = JSON.parse(response.body)
+    binding.pry
+    ENV['MASTER_TOKEN'] = refresh['access_token']
+  end
+
+  def self.automated_email(user,contact)
+    subject = "You've been a pretty bad friend..."
+    body = "Hey #{user.name},\n Looks like you haven't talked to #{contact.name.split(" ")[0]} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remind Team"
+
+    email = Mail.new do
+      from "miojonathan358@gmail.com"
+      to user.email
+      subject subject
+      body body
+    end
+
+    message = Google::Apis::GmailV1::Message.new
+    message.raw = email.to_s
+
+    service = Google::Apis::GmailV1::GmailService.new
+
+    service.request_options.authorization = ENV['MASTER_TOKEN']
+    service.send_user_message("miojonathan358@gmail.com", message_object = message)
+  end
+
   def self.valid_handle(twitter_handle)
     letters = twitter_handle.split("")
     letters.each do |letter|
@@ -16,11 +43,7 @@ class Misc < ActiveRecord::Base
     user.twitter_client.update(message)
   end
 
-  def self.automated_email(user, contact)
-    subject = "You've been a pretty bad friend..."
-    body = "Hey #{user.name},\n Looks like you haven't talked to #{contact.name} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remind Team"
-    send_mail(company_user, user.email, subject, body)
-  end
+
   #create a new client for authentication
   def self.load_google_client
     client_secrets = Google::APIClient::ClientSecrets.new(JSON.parse(ENV['GOOGLE_CLIENT_SECRETS']))
@@ -61,23 +84,23 @@ class Misc < ActiveRecord::Base
     service.send_user_message(user.google_id, message_object = message)
   end
 
-  def self.send_automated_dm(user, contact)
-    subject = "You've been a pretty bad friend..."
-    body = "Hey #{user.name}, \nLooks like you haven't talked to #{contact.name} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remindr Team"
-    send_dm(master_account, user.twitter_username,subject, body)
-  end
+  # def self.send_automated_dm(user, contact)
+  #   subject = "You've been a pretty bad friend..."
+  #   body = "Hey #{user.name}, \nLooks like you haven't talked to #{contact.name} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remindr Team"
+  #   send_dm(master_account, user.twitter_username,subject, body)
+  # end
 
   def self.send_dm(user, recipient, message)
     user.twitter_client.create_direct_message(recipient, message)
   end
 
   def self.automated_text(user,contact)
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client = Twilio::REST::Client.new ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN']
     number = user.phone[0] == 1 ? "+#{user.phone}" : "+1#{user.phone}"
     @client.account.messages.create({
       :from => '+16474928309',
-      :to => phone,
-      :body => "Hey #{user.name}, \nLooks like you haven't talked to #{contact.name} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remindr Team"
+      :to => number,
+      :body => "Hey #{user.name.split(" ")[0]}, \nLooks like you haven't talked to #{contact.name} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remindr Team"
     })
   end
 end

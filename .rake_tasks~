@@ -21,8 +21,7 @@ db:structure:dump
 db:structure:load
 db:version
 doc:app
-find_overdue
-get_twitter_dms
+friendship_maker
 jobs:check[max_age]
 jobs:clear
 jobs:work

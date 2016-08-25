@@ -52,7 +52,7 @@ class UsersController < ApplicationController
       @information = user_params
 
 
-      if (@information[:reminder_platform] == "Text" && (!@user.phone || @user.phone == "")) || (@information[:reminder_platform] == "Twitter" && !@user.token)
+      if (@information[:reminder_platform] == "Text" && (!@user.phone || @user.phone == ""))
         render :failure
         return
       end

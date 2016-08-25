@@ -13,7 +13,14 @@ class Contact < ActiveRecord::Base
         Misc.send_mail(user, email, "It's been a while...",user.automated_message)
       when "Twitter"
         Misc.send_dm(self, contact, user.automated_message)
-    end
+      end
+
+      if messages.length == 5
+        last = messages.order(time_stamp: :desc).last
+        Message.destroy(last)
+      end
+
+      Message.create(contact_id:id, user_id: user, time_stamp: Time.now.to_i, body_plain_text: user.automated_message, snippet: user.automated_message.slice(0,94))
   end
 
   #Load a contact's direct messages from twitter
@@ -165,9 +172,9 @@ class Contact < ActiveRecord::Base
     end
   end
   def twenty_nine_days?
-    message = messages.first
+    message = messages.order(time_stamp: :desc).first
     #days since last interaction
-    days_since = ((message.time_stamp - Time.now.to_i)/86400.0).floor
+    days_since = ((Time.now.to_i - message.time_stamp)/86400.0).floor
     if days_since == 29
       return true
     else
@@ -177,10 +184,10 @@ class Contact < ActiveRecord::Base
 
   #check if you havent talked to your contact for 30 days
   def thirty_days?
-    message = messages.first
+    message = messages.order(time_stamp: :desc).first
     #days since last interaction
-    days_since = ((message.time_stamp - Time.now.to_i)/86400.0).floor
-    if days_since == 30
+    days_since = ((Time.now.to_i - message.time_stamp)/86400.0).floor
+    if days_since >= 30
       return true
     else
       return false

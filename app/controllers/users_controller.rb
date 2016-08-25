@@ -57,9 +57,15 @@ class UsersController < ApplicationController
         return
       end
 
+      if @information[:reach_out_platform] == "Twitter" && !@user.token
+        render :failure
+        return
+      end
+
       if @information[:phone] == "" && @user.reminder_platform == "Text"
         @user.update(reminder_platform: "Email")
       end
+
 
       unless @user.update_attributes(@information)
         render :failure

@@ -73,11 +73,11 @@
         <div class="text-block">
 
               <%= form_for @user, remote: true, method: "put" do |f| %>
-              Remind me through: <br>
+              Remind me through <br>
               <%= f.select :reminder_platform, ['Twitter','Text','Email'], :selected => @user.reminder_platform %>
               <br><br>
-              Bother my friends through: <br>
-              <%= f.select :reach_out_platform, ['Twitter','Email'], :selected => @user.reminder_platform %>
+              Bother my friends through <br>
+              <%= f.select :reach_out_platform, ['Twitter','Email'], :selected => @user.reach_out_platform %>
               <br>
                 <%= f.submit "Update", id:'ghost-update-button'%>
               <% end %>

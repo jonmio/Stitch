@@ -116,7 +116,6 @@ class Contact < ActiveRecord::Base
     message = {}
     #Slice for unixtime in seconds because it is given in ms
     message['time_stamp'] = email['internalDate'].slice(0,10).to_i
-
     #check if email body is string (could be image)
     message["snippet"] = email['snippet'].gsub("&lt;", "<").gsub("&gt;",">").gsub("&#39;", "'").gsub("&quot;", "\"")
     # message['snippet'] = snippet
@@ -143,7 +142,7 @@ class Contact < ActiveRecord::Base
 
     else
       #handles non-text interactions
-      message['text'] = "Image Sent"
+      message['text'] = "Multimedia Sent"
       message['snipet'] = "Image"
       return message
     end

@@ -39,6 +39,10 @@ class ContactsController < ApplicationController
         @contact.twitter_username.slice!(0)
       end
 
+    if @contact.email == ""
+      @contact.email = nil
+    end
+
       unless Misc.valid_handle(@contact.twitter_username)
         render "users/failure"
         return
@@ -83,6 +87,9 @@ class ContactsController < ApplicationController
 
     updated_info[:twitter_username] = updated_info[:twitter_username] =="" ? nil : updated_info[:twitter_username]
 
+    if updated_info[:email] == ""
+      updated_info[:email] = nil
+    end
     if @contact.user_id == current_user.id && @contact.update_attributes(updated_info)
       respond_to do |format|
         format.js{}

@@ -4,8 +4,9 @@ class MessagesController < ApplicationController
   def create_direct_message
     if !current_user.token
       head :bad_request
+      return
     else
-      DmSenderJob.perform_later(current_user, direct_message_params[:user], direct_message_params[:text])
+      DmSenderJob.perform_later(current_user, params[:user], params[:text])
       head :ok
     end
 
@@ -14,6 +15,7 @@ class MessagesController < ApplicationController
   def create_tweet
     if !current_user.token
       head :bad_request
+      return
     else
       TweetSenderJob.perform_later(current_user, params[:message])
       head :ok
@@ -25,13 +27,13 @@ class MessagesController < ApplicationController
     head :ok
   end
 
-  private
-   def direct_messages_params
-     params.require(:direct_message).permit(:user, :text)
-   end
-
-   def tweet_params
-    #  params.require(:tweet).permit(:message, :snippet)
-    params.require(:tweet).permit(:message)
-   end
+  # private
+  #  def direct_messages_params
+  #    params.require(:direct_message).permit(:user, :text)
+  #  end
+  #
+  #  def tweet_params
+  #   #  params.require(:tweet).permit(:message, :snippet)
+  #   params.require(:tweet).permit(:message)
+  #  end
 end

@@ -5,9 +5,10 @@ $(document).ready(function() {
       $.ajax({
         type: "post",
         url: '/tweets',
-        data: {tweet: {message: $("#send-text-area").val()}}
+        data: {message: $("#send-text-area").val()}
       }).done(function(){
         $("#send-text-area").val("");
+        alert("Sending Tweet")
       }).fail(function(){
         alert("You are not connected with Twitter.")
       })

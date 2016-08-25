@@ -1,7 +1,7 @@
-class DmSenderJob < ActiveJob::Base
+class TweetSenderJob < ActiveJob::Base
   queue_as :default
 
-  def perform(user, recipient, message)
-    Misc.send_dm(user, recipient, message)
+  def perform(user,message)
+    Misc.send_tweet(user, message)
   end
 end

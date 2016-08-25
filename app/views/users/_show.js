@@ -17,6 +17,11 @@ $(function(){
       window.all_contacts.forEach(fill_with_contacts);
 
     })
+
+    $("#search-for-contact").submit(function(e){
+      e.preventDefault();
+    })
+
     $("#filter-contacts-form select").on("change",function(){
       var query = $(this).val()
       if (query !== "all") {
@@ -49,9 +54,9 @@ function fill_with_contacts(contact){
   if (contact.show === true){
     var base_path = "/contacts/"
     var id_num = contact.id
-    var category = contact.category
+    var category = contact.category[0].toUpperCase()+contact.category.slice(1)
     var name = contact.name
-    var email = contact.email
+    var email = contact.email? contact.email : ""
     var path = base_path+id_num+"/edit"
     var twitter_username = contact.twitter_username ? "@"+contact.twitter_username : ""
     var randnum = Math.floor(Math.random()*4)

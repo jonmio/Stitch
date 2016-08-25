@@ -1,6 +1,5 @@
 $(function() {
 
-
     $.ajax({
       method: "GET",
       url: "/contacts.json",
@@ -10,9 +9,14 @@ $(function() {
       response.forEach(load_contacts);
 
       if ($(".contact-message")[0]){
-        $(".contact-message")[0].click();
+        var index_of_hash = window.location.href.indexOf("#")
+        if (index_of_hash == -1) {
+          $(".contact-message")[0].click();
+        }
+        else {
+          $(window.location.href.slice(index_of_hash)).click()
+        }
       }
-
     })
 
     $("#search_contact").on("submit",function(event){
@@ -30,10 +34,7 @@ $(function() {
       if ($(".contact-message")[0]){
         $(".contact-message")[0].click();
       }
-
     })
-
-
 })
 
 function load_contacts(contact){

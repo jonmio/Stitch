@@ -1,5 +1,8 @@
 $(function() {
   $('.add-contact-button').on('click', function(e) {
+    $("#new_contact input" ).val("")
+    $("#new_contact input[type=submit]").val("Add Contact")
+
     $('.modal').css('display', 'block');
   })
 

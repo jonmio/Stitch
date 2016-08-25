@@ -15,10 +15,10 @@
 <div class="nav-bar">
   <%= link_to "Remindr", root_path, class:"logo" %>
     <% if current_user %>
-      <%= link_to "LOG OUT", session_path("this session"), class:"logoutButton", :method => :delete %>
+      <%= link_to "LOG OUT", session_path("session"), class:"logoutButton", :method => :delete %>
     <% else %>
-      <%= link_to "LOG IN", "/", class:"loginButton" %>
-    <%= link_to "SIGN UP", "/", class:"signup" %>
+      <a class="loginButton">LOG IN</a>
+      <a class="signup"> SIGN UP </a>
     <% end %>
 
     <% if current_user %>

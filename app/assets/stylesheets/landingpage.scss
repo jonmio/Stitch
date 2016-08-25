@@ -45,6 +45,9 @@ $yellowbuttons:  hsl(48, 100%, 45%);
   z-index: 10;
 }
 
+a:hover {
+  cursor: pointer;
+}
 .logo {
   float: left;
   margin-left: 2rem;

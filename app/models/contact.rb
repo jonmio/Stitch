@@ -44,7 +44,7 @@ class Contact < ActiveRecord::Base
   def get_most_recent_messages
     message_list = []
     #Check if email exists for contact
-    if google_id
+    if user.google_id
       message_list += get_email
     end
 
@@ -54,7 +54,7 @@ class Contact < ActiveRecord::Base
     end
 
     if message_list.length > 0
-      sorted = potential_messages.sort_by{|message| message['time_stamp']}.reverse
+      sorted = message_list.sort_by{|message| message['time_stamp']}.reverse
       Message.destroy_all(contact_id: id)
       i=0
       while i<=4 && i < sorted.length
@@ -191,7 +191,7 @@ class Contact < ActiveRecord::Base
   #update reminder for each contact
   def update_reminder
     #Time since last contact
-    time_difference = (DateTime.now.strftime('%s').to_i) - (messages.order(time_stamp: :desc).first)
+    time_difference = (DateTime.now.strftime('%s').to_i) - (messages.order(time_stamp: :desc).first.time_stamp)
     #Status of interactions
     message_type = ( ((time_difference/86400) < 30) ? 'upcoming' : 'overdue')
     #Check if you should update an existing reminder or create a new one

@@ -5,8 +5,6 @@ $(function(){
       datatype: "json"
     }).done(function(response){
       window.all_contacts = response
-      console.log(window.all_contacts)
-
       response.forEach(fill_with_contacts);
       var target_div = $(".all-contacts-scroll-div")
     })
@@ -55,7 +53,7 @@ function fill_with_contacts(contact){
     var name = contact.name
     var email = contact.email
     var path = base_path+id_num+"/edit"
-    var twitter_username = contact.twitter_username
+    var twitter_username = contact.twitter_username ? "@"+contact.twitter_username : ""
     var randnum = Math.floor(Math.random()*4)
     $(".all-contacts-scroll-div").append("<div class=wrapper><a href="+path+" data-remote=true class=contact-name-link><div class=contact-cards-user-page edit-contact><div class=contact-profile-picture"+randnum+"></div><div class=contact-card-information><h4 class=twenty-font not-link>"+name+"</h4><h6 class=sixteen-font not-link>"+category+"</h6>"+"<h6 class=sixteen-font not-link>"+email+"</h6><h6 class=sixteen=font not-link>"+twitter_username+"</h6></div></div><a href=/contacts/"+id_num+" class=edit-link data-method=delete confirm="+"Are you sure you want to delete this contact?>Delete")
   }

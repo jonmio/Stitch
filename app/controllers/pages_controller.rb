@@ -4,16 +4,12 @@ class PagesController < ApplicationController
   #twitter callback after verification
   def twitter_callback
     @user = current_user.save_callback_info_twitter(request.env['omniauth.auth'])
-    redirect_to newsfeed_path
+    redirect_to pull_messages_path
   end
 
   #ask user if we can load google contacts
   def permission
   end
-
-  # def analytics
-  #   @messages = Message.all
-  # end
 
   #click to import from twitter
   def twitter_sync
@@ -76,6 +72,7 @@ class PagesController < ApplicationController
     current_user.update_reminders
     respond_to do |format|
       format.js{}
+      format.html{redirect_to newsfeed_path}
     end
   end
 end

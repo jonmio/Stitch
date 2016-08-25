@@ -10,7 +10,7 @@ class ContactsController < ApplicationController
         @contacts_render = []
         @contacts.each do |contact|
           person = contact.as_json
-          person['twitter_username'] = "@"+person['twitter_username']
+          person['twitter_username'] = person['twitter_username'] ? (person['twitter_username']): nil
           person['show'] = true
           @contacts_render << person
         end
@@ -38,14 +38,17 @@ class ContactsController < ApplicationController
       if @contact.twitter_username[0] == "@"
         @contact.twitter_username.slice!(0)
       end
+
       unless Misc.valid_handle(@contact.twitter_username)
         render "users/failure"
         return
       end
     end
 
+
+
     if @contact.save
-      @contact.twitter_username = "@"+ @contact.twitter_username
+      @contact.twitter_username = @contact.twitter_username == "" ? nil : @contact.twitter_username
       respond_to do |format|
         format.js{}
       end
@@ -77,6 +80,8 @@ class ContactsController < ApplicationController
       render "users/failure"
       return
     end
+
+    updated_info[:twitter_username] = updated_info[:twitter_username] =="" ? nil : updated_info[:twitter_username]
 
     if @contact.user_id == current_user.id && @contact.update_attributes(updated_info)
       respond_to do |format|

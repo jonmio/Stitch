@@ -20,7 +20,7 @@
           <h3 class="sign-up-heading">SIGN UP</h3>
           <h4 class='sign-up-heading-error'></h4>
         </div>
-        Name  <br><%= f.text_field :name, class: 'signup-modal-field', placeholder: "eg. John Doe"%><br>
+        Name  <br><%= f.text_field :name, class: 'signup-modal-field', placeholder: "John Doe"%><br>
         Phone (optional) <br><%= f.text_field :phone,  class: 'signup-modal-field', placeholder: "416 676 9999" %><br>
         Email  <br><%= f.email_field :email, class: 'signup-modal-field', id: 'email-signup', placeholder: "johndoe@gmail.com" %><br>
         Password <br><%= f.password_field :password, class: 'signup-modal-field', id: 'signup-field',placeholder: "**********" %><br>
@@ -64,9 +64,9 @@
         <h4 class='login-heading-error'></h4>
       </div>
           <%= label_tag :email %><br>
-          <%= email_field_tag :email, params[:email], placeholder: "eg. johndoe@gmail.com", class: 'field'%>
+          <%= email_field_tag :email, params[:email], placeholder: "johndoe@gmail.com", class: 'field'%>
           <%= label_tag :password %><br>
-          <%= password_field_tag :password, nil, class:'field'%>
+          <%= password_field_tag :password, nil, class:'field', placeholder: "**********"%>
         <%= submit_tag "Log In", class: 'modal-submit', id: 'modal-submit-login' %>
       <% end %>
     </div>

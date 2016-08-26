@@ -1,5 +1,4 @@
 $(function() {
-    importContactButton();
     $.ajax({
       method: "GET",
       url: "/import_contacts.json",
@@ -24,6 +23,24 @@ $(function() {
 
     });
 
+    $("#import_contact_button").click(function(e){
+      $("#import_contact_button").attr('id',"");
+      e.preventDefault()
+
+      window.all_contacts.forEach(function(contact){
+        if (contact.selected === true){
+          contact.category = 'friend'
+
+          $.ajax({
+              url:"/contacts",
+              method:"post",
+              data: {contact: contact}
+            })
+        }
+      })
+      window.location.replace("/link_to_twitter")
+    })
+
 });
 
 function clickable(){
@@ -44,31 +61,7 @@ function clickable(){
   })
 }
 
-function importContactButton(){
 
-  $("#import_contact_button").click(function(e){
-    $("#import_contact_button").attr('id',"");
-    e.preventDefault()
-
-    window.all_contacts.forEach(function(contact){
-      if (contact.selected === true){
-        contact.category = 'friend'
-        $.ajax({
-            url:"/contacts",
-            method:"post",
-            data: {contact: contact},
-            async: false
-          })
-      }
-    })
-
-    $.ajax({
-      url:"/pull_messages",
-      method:"GET"
-    })
-    window.location.replace("/link_to_twitter");
-  })
-}
 function load_imported_contacts(contact, index){
   if ( (contact.show === true) && (contact.selected === false) ){
     if (contact.name !== "") {

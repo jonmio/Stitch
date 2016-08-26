@@ -10,9 +10,13 @@ class Contact < ActiveRecord::Base
   def reach_out
     case user.reach_out_platform
       when "Email"
-        Misc.send_mail(user, email, "It's been a while...",user.automated_message)
+        if email
+          Misc.send_mail(user, email, "It's been a while...",user.automated_message)
+        end
       when "Twitter"
-        Misc.send_dm(self, contact, user.automated_message)
+        if twitter_username
+          Misc.send_dm(user, twitter_username, user.automated_message)
+        end
       end
 
       if messages.length == 5
@@ -32,6 +36,7 @@ class Contact < ActiveRecord::Base
         message = {}
         message['time_stamp'] = direct_message.created_at.to_i
         message['text'] = direct_message.text
+        message['snippet'] = direct_message.text.slice(0,94)
         dms << message
       end
     end
@@ -51,12 +56,12 @@ class Contact < ActiveRecord::Base
   def get_most_recent_messages
     message_list = []
     #Check if email exists for contact
-    if user.google_id
+    if user.google_id && email
       message_list += get_email
     end
 
     #Check if the user is synched with twitter
-    if user.token
+    if user.token && twitter_username
       message_list += get_dms(user.twitter_client)
     end
 
@@ -102,7 +107,7 @@ class Contact < ActiveRecord::Base
   #Finds email id of most recent outbound email from user to contact
   def search_email(user_google_id, token)
     #search string
-    query= "to:#{email}"
+    query= "to:#{email} OR from:#{email}"
     query_email_api_url = "https://www.googleapis.com/gmail/v1/users/#{user_google_id}/messages?maxResults=5&q=#{query}&access_token=#{token}"
     #True if there are past interactions on email
     if JSON.parse(RestClient.get(query_email_api_url))['messages']

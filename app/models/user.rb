@@ -114,12 +114,11 @@ class User < ActiveRecord::Base
   #call method to reach out to contact if you haven't talked to them in 30 days or remind user if its 29
   def check_overdue
     contacts.each do |contact|
+      binding.pry
       if contact.thirty_days?
-        binding.pry
         contact.reach_out
       elsif contact.twenty_nine_days?
-        binding.pry
-        self.remind(contact)
+        remind(contact)
       end
     end
   end

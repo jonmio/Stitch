@@ -36,7 +36,6 @@ class UsersController < ApplicationController
       :to => ENV['PHONE'],
       :body => "New User"
     })
-    end
   end
 
 

@@ -18,6 +18,6 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-every 1.minutes do
-  rake "task_name", :environment => "development"
-end
+# every 1.minutes do
+#   rake "task_name", :environment => "development"
+# end

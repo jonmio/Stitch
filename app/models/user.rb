@@ -86,35 +86,19 @@ class User < ActiveRecord::Base
     end
   end
 
-  # #get direct message of all users with all contacts
-  # def self.get_direct_messages_all_users
-  #   all.each do |user|
-  #     user.check_token
-  #     user.get_direct_messages
-  #   end
-  # end
-  #
-  # #get direct message of a user with all their contacts
-  # def get_direct_messages
-  #   twitter_client = twitter_client
-  #   contacts.each do |contact|
-  #     contact.get_dms(twitter_client)
-  #   end
-  # end
 
   #call check_overdue on all users
   def self.check_overdue_all_users
     all_users = User.all
     all_users.each do |user|
-      user.check_token
       user.check_overdue
     end
   end
 
   #call method to reach out to contact if you haven't talked to them in 30 days or remind user if its 29
   def check_overdue
+    check_token
     contacts.each do |contact|
-      binding.pry
       if contact.thirty_days?
         contact.reach_out
       elsif contact.twenty_nine_days?
@@ -142,6 +126,7 @@ class User < ActiveRecord::Base
   end
 
   def update_newsfeed
+    check_token
     contacts.each do |contact|
       contact.get_most_recent_messages
     end

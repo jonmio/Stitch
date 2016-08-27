@@ -31,7 +31,7 @@ class Contact < ActiveRecord::Base
   def get_dms(user_client)
     dms = []
     # loop through messages and store them in dms array
-    user_client.direct_messages_sent(options = {}).each do |direct_message|
+    user_client.direct_messages_sent(options = {count: 200}).each do |direct_message|
       if direct_message.recipient.screen_name == self.twitter_username
         message = {}
         message['time_stamp'] = direct_message.created_at.to_i
@@ -85,7 +85,6 @@ class Contact < ActiveRecord::Base
   #Get all emails to and from a contact
   def get_email
     #Get new token for the user associated with contact if expired
-    user.check_token
     token = user.access_token
     user_google_id = user.google_id
     #Query gmail to find email_id of last email
@@ -107,7 +106,7 @@ class Contact < ActiveRecord::Base
   #Finds email id of most recent outbound email from user to contact
   def search_email(user_google_id, token)
     #search string
-    query= "to:#{email} OR from:#{email}"
+    query= "to:#{email}+OR+from:#{email}"
     query_email_api_url = "https://www.googleapis.com/gmail/v1/users/#{user_google_id}/messages?maxResults=5&q=#{query}&access_token=#{token}"
     #True if there are past interactions on email
     if JSON.parse(RestClient.get(query_email_api_url))['messages']

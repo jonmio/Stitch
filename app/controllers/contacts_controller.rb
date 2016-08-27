@@ -30,7 +30,7 @@ class ContactsController < ApplicationController
     @contact = Contact.new(contact_params)
     @contact.user_id = current_user.id
 
-    if @contact.phone.length > 0 && @contact.phone != @contact.phone.gsub(/[^\d]/, '')
+    if @contact.phone && @contact.phone.length > 0 && @contact.phone != @contact.phone.gsub(/[^\d]/, '')
       render "users/failure"
       return
     end

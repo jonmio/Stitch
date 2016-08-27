@@ -2,11 +2,9 @@ class UsersController < ApplicationController
 
   before_action :ensure_logged_in, except: [:create]
 
-
   def index
     @users = User.all
   end
-
 
   def show
     if current_user.id.to_s != params[:id]
@@ -15,17 +13,8 @@ class UsersController < ApplicationController
       @user = current_user
       @contacts = @user.contacts
       @contact = Contact.new
-      # if request.xhr?
-      #   @contact = Contact.find(params[:id])
-      #   respond_to do |format|
-      #     binding.pry
-      #     #responds to ajax request and executes script on click
-      #     format.js {}
-      #   end
-      # end
     end
   end
-
 
   def create
     @user = User.new(user_params)
@@ -35,7 +24,6 @@ class UsersController < ApplicationController
     @user.automated_message = "Hey! We haven't talked for a while, and I miss you dearly. I've been thinking about you recently. How are things going?"
 
     if @user.save
-      #log the user in
       session[:user_id] = @user.id
       redirect_to googleauth_path
     else
@@ -51,7 +39,6 @@ class UsersController < ApplicationController
       @user = current_user
       @information = user_params
 
-
       if (@information[:reminder_platform] == "Text" && (!@user.phone || @user.phone == ""))
         render :failure
         return
@@ -66,14 +53,12 @@ class UsersController < ApplicationController
         @user.update(reminder_platform: "Email")
       end
 
-
       unless @user.update_attributes(@information)
         render :failure
         return
       end
     end
   end
-
 
   private
   def user_params

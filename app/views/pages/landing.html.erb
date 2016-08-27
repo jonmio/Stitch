@@ -1,5 +1,4 @@
 <% unless current_user %>
-
   <% if flash[:signup_modal] %>
     <script type='text/javascript'>
       $(document).on('ready', function() {
@@ -78,7 +77,6 @@
 
 
 <!-- Section 2: The following is the photo background w text & sign up button -->
-  <!-- <%= video_tag "video.mp4", :controls => false, autoplay: :autoplay, loop: :loop, id:"photo-background"%> -->
   <div class="photo-background-image">
     <div class="photo-background">
     <div class="welcome-text">
@@ -193,9 +191,7 @@
   </div>
 </div>
 
-
 <!-- Section 4: The following is the final div of the landing page -->
-
   <div id="landingBottom">
     <h1 id="textHeading">Ready to join?</h1>
       <a class="getstarted" id="bottom-button">START CONNECTING</a>

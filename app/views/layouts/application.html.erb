@@ -22,7 +22,6 @@
     <% end %>
 
     <% if current_user %>
-      <!-- code to check if current user has overdue messages -->
       <% counter = 0 %>
       <% current_user.reminders.each do |reminder| %>
         <% if reminder.reminder_type == 'overdue' %>
@@ -35,7 +34,6 @@
 
 
       <% else %>
-      <!-- code for nav links -->
         <%= link_to (image_tag "notification.svg"), reminders_path, class: "nav-icon" %>
       <% end %>
       <%= link_to (image_tag "ic_message_white_24px.svg"), newsfeed_path, class: "nav-icon" %>

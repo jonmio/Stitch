@@ -99,8 +99,6 @@ function update_all_contacts(contact_email, contact_name) {
   })
 }
 
-//<input type='hidden' class='potential-contact-phone-number' name='phone_number'>"+contact.phone+"</input>
-
 function duplicated_elements(searchterm){
 
     window.all_contacts.forEach(function(contact){

@@ -1,7 +1,5 @@
 class SessionsController < ApplicationController
 
-
-  #on login
   def create
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
@@ -14,7 +12,6 @@ class SessionsController < ApplicationController
     end
   end
 
-  #on logout
   def destroy
     session[:user_id] = nil
     redirect_to root_path, notice: "You have logged out."

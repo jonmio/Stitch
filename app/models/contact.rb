@@ -27,10 +27,8 @@ class Contact < ActiveRecord::Base
       Message.create(contact_id:id, user_id: user, time_stamp: Time.now.to_i, body_plain_text: user.automated_message, snippet: user.automated_message.slice(0,94))
   end
 
-  #Load a contact's direct messages from twitter
   def get_dms(user_client)
     dms = []
-    # loop through messages and store them in dms array
     user_client.direct_messages_sent(options = {count: 200}).each do |direct_message|
       if direct_message.recipient.screen_name == self.twitter_username
         message = {}
@@ -43,24 +41,13 @@ class Contact < ActiveRecord::Base
     dms
   end
 
-
-  #Called during scheduled task to get the most recent interaction with every contact
-  def self.update
-    all_contacts = Contact.all
-    all_contacts.each do |contact|
-      contact.get_most_recent_message
-    end
-  end
-
   #Get five most recent tweets or dms
   def get_most_recent_messages
     message_list = []
-    #Check if email exists for contact
     if user.google_id && email
       message_list += get_email
     end
 
-    #Check if the user is synched with twitter
     if user.token && twitter_username
       message_list += get_dms(user.twitter_client)
     end
@@ -84,15 +71,13 @@ class Contact < ActiveRecord::Base
 
   #Get all emails to and from a contact
   def get_email
-    #Get new token for the user associated with contact if expired
     token = user.access_token
     user_google_id = user.google_id
-    #Query gmail to find email_id of last email
+    #Query gmail to find email_id of last 5 emails
     email_ids = search_email(user_google_id, token)
-    #Past interactions exist
+
     if email_ids
       emails = []
-      #Find email body an message details
       email_ids.each do |id|
         emails << fetch_email(user_google_id, token, id)
       end
@@ -105,10 +90,8 @@ class Contact < ActiveRecord::Base
 
   #Finds email id of most recent outbound email from user to contact
   def search_email(user_google_id, token)
-    #search string
     query= "to:#{email}+OR+from:#{email}"
     query_email_api_url = "https://www.googleapis.com/gmail/v1/users/#{user_google_id}/messages?maxResults=5&q=#{query}&access_token=#{token}"
-    #True if there are past interactions on email
     if JSON.parse(RestClient.get(query_email_api_url))['messages']
       email_ids = []
       JSON.parse(RestClient.get(query_email_api_url))['messages'].each do |message|
@@ -127,9 +110,7 @@ class Contact < ActiveRecord::Base
     message = {}
     #Slice for unixtime in seconds because it is given in ms
     message['time_stamp'] = email['internalDate'].slice(0,10).to_i
-    #check if email body is string (could be image)
     message["snippet"] = email['snippet'].gsub("&lt;", "<").gsub("&gt;",">").gsub("&#39;", "'").gsub("&quot;", "\"")
-    # message['snippet'] = snippet
 
     #hanles emails that have 1 part
     if email['payload']['body']['data'] != nil
@@ -159,22 +140,6 @@ class Contact < ActiveRecord::Base
     end
   end
 
-  #check if contact and user have interacted before
-  def first_interaction?(contact)
-    if Message.where(contact_id: contact.id) != []
-      return false
-    else
-      return true
-    end
-  end
-
-  def message_exist?(contact, timestamp)
-    if Message.where(time_stamp: timestamp) != []
-      return true
-    else
-      return false
-    end
-  end
   def twenty_nine_days?
     message = messages.order(time_stamp: :desc).first
     #days since last interaction

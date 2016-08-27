@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 gem 'figaro'
-gem 'easytone', '0.1.5'
 
 #taskrunner
 

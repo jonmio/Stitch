@@ -69,26 +69,17 @@ class Misc < ActiveRecord::Base
       body bod
     end
 
-
-    # create gmail message object and pass in raw body as string
     message = Google::Apis::GmailV1::Message.new
     message.raw = email.to_s
 
-    # start an instance of gmailservice
     service = Google::Apis::GmailV1::GmailService.new
 
-    # check token expiry and refresh if needed
     user.check_token
 
     service.request_options.authorization = user.access_token
     service.send_user_message(user.google_id, message_object = message)
   end
 
-  # def self.send_automated_dm(user, contact)
-  #   subject = "You've been a pretty bad friend..."
-  #   body = "Hey #{user.name}, \nLooks like you haven't talked to #{contact.name} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remindr Team"
-  #   send_dm(master_account, user.twitter_username,subject, body)
-  # end
 
   def self.send_dm(user, recipient, message)
     user.twitter_client.create_direct_message(recipient, message)

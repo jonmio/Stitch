@@ -2,9 +2,7 @@ class ContactsController < ApplicationController
 
   before_action :ensure_logged_in
 
-  #All contacts page
   def index
-    #return json of all contacts if ajax
     if request.xhr?
         @contacts = Contact.all.where(user_id:current_user.id)
         @contacts_render = []
@@ -24,32 +22,28 @@ class ContactsController < ApplicationController
   def show
     @contact = Contact.find(params[:id])
     respond_to do |format|
-      #responds to ajax request and executes script on click
       format.js {}
     end
   end
 
-  #Creating a new contact
   def create
     @contact = Contact.new(contact_params)
     @contact.user_id = current_user.id
+
+    if @contact.email == ""
+      @contact.email = nil
+    end
 
     if @contact.twitter_username
       if @contact.twitter_username[0] == "@"
         @contact.twitter_username.slice!(0)
       end
 
-    if @contact.email == ""
-      @contact.email = nil
-    end
-
       unless Misc.valid_handle(@contact.twitter_username)
         render "users/failure"
         return
       end
     end
-
-
 
     if @contact.save
       @contact.twitter_username = @contact.twitter_username == "" ? nil : @contact.twitter_username
@@ -59,10 +53,8 @@ class ContactsController < ApplicationController
     else
       head :internal_server_errror
     end
-
   end
 
-  #Delete a contact
   def destroy
     @contact = Contact.find(params[:id])
     if @contact.user_id == current_user.id && @contact.destroy
@@ -90,23 +82,24 @@ class ContactsController < ApplicationController
     if updated_info[:email] == ""
       updated_info[:email] = nil
     end
+
     if @contact.user_id == current_user.id && @contact.update_attributes(updated_info)
       respond_to do |format|
         format.js{}
       end
+
     else
       head :unauthorized
     end
   end
 
-  #Path is reached when the user is clicked on contacts index
+  #Path is reached when the user is clicked on a contact card on the user show page
   def edit
     @contact = Contact.find(params[:id])
     respond_to do |format|
       format.js {}  # to show the contacts info in form on all contacts page
     end
   end
-
 
   private
   def contact_params

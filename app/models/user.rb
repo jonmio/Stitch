@@ -1,17 +1,13 @@
 class User < ActiveRecord::Base
-  #bcrypt method
   has_secure_password
 
-  #validations
   validates :name, :email, presence: true
   validates :email, uniqueness: true
 
-  #ActiveRecord associations
   has_many :contacts
   has_many :messages, through: :contacts
   has_many :reminders, through: :contacts
 
-# create twitter client to authenticate
   def twitter_client
     client = Twitter::REST::Client.new do |config|
       config.consumer_key        = ENV["TWITTER_CONSUMER_KEY"]
@@ -57,14 +53,11 @@ class User < ActiveRecord::Base
 
   #use refresh token to get new access token
   def refresh
-    #post to url to get new token
     response = RestClient.post 'https://accounts.google.com/o/oauth2/token', :grant_type => 'refresh_token', :refresh_token => refresh_token, :client_id => ENV['CLIENT'], :client_secret => ENV['CLIENT_SECRET']
     refresh = JSON.parse(response.body)
-    #store token
     self.update(access_token:refresh['access_token'])
   end
 
-  #save twitter callback token
   def save_callback_info_twitter(auth_hash)
     self.provider = auth_hash['provider']
     self.token = auth_hash['credentials']['token']
@@ -74,20 +67,15 @@ class User < ActiveRecord::Base
 
   # check if the token is expired
   def check_token
-    #check when token was stored
     issued_at_time = issued_at.strftime('%s')
-    #check when it will expire. also added 60 second buffer for processing time
     issued_at_time = issued_at_time.to_i+3660
     expiry = DateTime.strptime(issued_at_time.to_s, '%s')
-    #see if token has expired at this time
     if expiry < DateTime.now
-      #get a new token
       refresh
     end
   end
 
 
-  #call check_overdue on all users
   def self.check_overdue_all_users
     all_users = User.all
     all_users.each do |user|

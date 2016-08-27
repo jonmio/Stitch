@@ -9,9 +9,6 @@
   <div class='inner-loading-modal'>Getting new messages...</div>
 </div>
 
-<!-- Section 1: Navigation Bar (see: application.html.erb & landingpage.scss)  -->
-
-
 
 <!-- 'main-container' contains everything on the page except the navigation bar at the top of the page -->
 <div class="main-container">
@@ -20,21 +17,13 @@
 <!-- Section 3: List of All Contacts (left 25% of the page)  -->
   <div class="contacts-container">
     <div class="searchbar-with-icons-div">
-      <!-- <a href=#>
-      <div class="filter-icon">
-        <%= image_tag "filter.png" %>
-      </div>
-      </a> -->
+
       <div class="search-contacts-bar">
         <%= form_tag contacts_path,id:"search_contact" do %>
         <%= text_field_tag :search, params[:search], placeholder: "Search contacts", class: 'search-bar-field'%>
         <% end %>
       </div>
-      <!-- <a href=#>
-        <div class="add-icon">
-        <%= image_tag "add-contact.png" %>
-        </div>
-      </a> -->
+
     </div>
 <!-- 'List of Contacts/Messages' div -->
   <div id='load_contact_box'>
@@ -52,33 +41,9 @@
   <div class="contact-info-updating-container">
     <div class="messages">
       <div id="message-content">
-      <% #Messages of contact you click on %>
       </div>
-        <!-- send direct message via twitter  -->
-        <!-- <div class-"send-twitter-div"> -->
-          <!-- <div class="send-direct-message">
-              <%= form_tag "/", id:"send-direct-message" do %>
-                <%= hidden_field_tag "receiver-twitter-user", nil, id:"twitter-user-field"%>
-                <%= label_tag "direct_message", "Twitter Direct Message: ", class:"message-label" %><br>
-                <%= text_area_tag "direct_message", nil, class:"twitter_field", id: 'twitter-text-area'  %>
-                <div class="send-dm-submit">
-                <%= submit_tag "Send"%>
-                </div>
-              <% end %>
-          </div> -->
 
-          <!-- <div class="send-tweet">
-            <%= form_tag '/', id:'send-tweet' do %>
-            <%= label_tag "tweet_message", "Tweet:", class:"message-label" %><br>
-            <%= text_area_tag "tweet_message", nil, class:"twitter_field",id: 'send-text-area' %>
-            <div class="send-tweet-submit">
-            <%= submit_tag "Send" %>
-            </div>
-            <% end %>
-          </div> -->
-        <!-- </div> -->
 
-        <!-- send email  -->
       <div id='message-div-small'>Click to send a message!</div>
 
       <div id='toggle-message-div'>

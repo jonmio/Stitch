@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
   before_action :ensure_logged_in, except: [:landing]
 
-  #twitter callback after verification
   def twitter_callback
     @user = current_user.save_callback_info_twitter(request.env['omniauth.auth'])
     redirect_to pull_messages_path
@@ -11,17 +10,16 @@ class PagesController < ApplicationController
   def permission
   end
 
-  #click to import from twitter
+  #ask user to connect with twitter
   def twitter_sync
   end
 
-  #oauth with google
   def googleauth
     auth_uri = Misc.load_google_client.authorization_uri.to_s
     redirect_to auth_uri
   end
 
-  #After they are authenitcated with google
+  #google callback
   def callback
     #if user clicks deny
     if params[:error]
@@ -33,7 +31,6 @@ class PagesController < ApplicationController
       @auth_client.code = params[:code]
       #exchange auth for token
       @auth_client.fetch_access_token!
-      #save in db
       if @auth_client.refresh_token != nil
         current_user.update({access_token: @auth_client.access_token, refresh_token: @auth_client.refresh_token, issued_at: @auth_client.issued_at})
       else
@@ -49,6 +46,7 @@ class PagesController < ApplicationController
     end
   end
 
+  #import contacts for new user
   def import
     if request.xhr?
       @potential_contacts = current_user.google_contacts
@@ -56,13 +54,10 @@ class PagesController < ApplicationController
     end
   end
 
-  #newsfeed
   def newsfeed
-    #new contact the form for new contact
     @contacts = current_user.contacts
   end
 
-  #landing page
   def landing
     @user = User.new
   end

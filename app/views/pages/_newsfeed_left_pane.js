@@ -1,5 +1,4 @@
 $(function() {
-
     $.ajax({
       method: "GET",
       url: "/contacts.json",

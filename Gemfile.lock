@@ -64,7 +64,6 @@ GEM
       delayed_job (>= 3.0, < 5)
     domain_name (0.5.20160615)
       unf (>= 0.0.5, < 1.0.0)
-    easytone (0.1.5)
     equalizer (0.0.10)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -269,7 +268,6 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   delayed_job_active_record
-  easytone (= 0.1.5)
   figaro
   google-api-client
   jbuilder (~> 2.0)

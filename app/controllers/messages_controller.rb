@@ -9,7 +9,6 @@ class MessagesController < ApplicationController
       DmSenderJob.perform_later(current_user, params[:user], params[:text])
       head :ok
     end
-
   end
 
   def create_tweet
@@ -27,13 +26,4 @@ class MessagesController < ApplicationController
     head :ok
   end
 
-  # private
-  #  def direct_messages_params
-  #    params.require(:direct_message).permit(:user, :text)
-  #  end
-  #
-  #  def tweet_params
-  #   #  params.require(:tweet).permit(:message, :snippet)
-  #   params.require(:tweet).permit(:message)
-  #  end
 end

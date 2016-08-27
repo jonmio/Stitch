@@ -1,7 +1,6 @@
 class RemindersController < ApplicationController
   before_action :ensure_logged_in
 
-  #reminder crud actions
   def index
     @type = current_user.reminder_platform
     @types = ['Email', "Twitter", "Text"]

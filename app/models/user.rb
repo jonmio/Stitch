@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  #call method to reach out to contact if you haven't talked to them in 30 days or remind user if its 29
+  #call method to reach out to contact if you havent talked to them in 30 days or remind user if its 29
   def check_overdue
     check_token
     contacts.each do |contact|

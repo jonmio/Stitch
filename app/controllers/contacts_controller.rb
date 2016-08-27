@@ -73,7 +73,7 @@ class ContactsController < ApplicationController
     @contact = Contact.find(params[:id])
     updated_info = contact_params
 
-    if updated_info[:phone].length > 0 && updated_info[:phone] != [:phone].gsub(/[^\d]/, '')
+    if updated_info[:phone].length > 0 && updated_info[:phone] != updated_info[:phone].gsub(/[^\d]/, '')
       render "users/failure"
       return
     end

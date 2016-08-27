@@ -170,7 +170,7 @@ class Contact < ActiveRecord::Base
     #Status of interactions
     message_type = ( ((time_difference/86400) < 30) ? 'upcoming' : 'overdue')
     #Check if you should update an existing reminder or create a new one
-    Reminders.destroy(reminders.first)
+    Reminder.destroy(reminders.first)
     if (time_difference/86400) > 4
         Reminder.create(contact_id:id, reminder_type:message_type, message:messages.first.body_plain_text, time_since_last_contact:(time_difference/86400), user_id:user_id)
     end

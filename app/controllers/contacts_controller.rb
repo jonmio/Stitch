@@ -30,6 +30,11 @@ class ContactsController < ApplicationController
     @contact = Contact.new(contact_params)
     @contact.user_id = current_user.id
 
+    if @contact.phone.length > 0 && @contact.phone != @contact.phone.gsub(/[^\d]/, '')
+      render "users/failure"
+      return
+    end
+
     if @contact.email == ""
       @contact.email = nil
     end
@@ -67,6 +72,11 @@ class ContactsController < ApplicationController
   def update
     @contact = Contact.find(params[:id])
     updated_info = contact_params
+
+    if updated_info[:phone].length > 0 && updated_info[:phone] != [:phone].gsub(/[^\d]/, '')
+      render "users/failure"
+      return
+    end
 
     if updated_info[:twitter_username][0] == "@"
       updated_info[:twitter_username].slice!(0)

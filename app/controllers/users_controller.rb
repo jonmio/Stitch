@@ -60,7 +60,7 @@ class UsersController < ApplicationController
         @user.update(reminder_platform: "Email")
       end
 
-      if @information[:phone].length > 0 &&  @information[:phone] != @information[:phone].gsub(/[^\d]/, '')
+      if @information[:phone] && @information[:phone].length > 0 &&  @information[:phone] != @information[:phone].gsub(/[^\d]/, '')
         render :failure
       end
 

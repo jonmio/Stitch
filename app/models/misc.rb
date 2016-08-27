@@ -4,7 +4,6 @@ class Misc < ActiveRecord::Base
   def self.refresh_master_token
     response = RestClient.post 'https://accounts.google.com/o/oauth2/token', :grant_type => 'refresh_token', :refresh_token => ENV['MASTER_REFRESH'], :client_id => ENV['CLIENT'], :client_secret => ENV['CLIENT_SECRET']
     refresh = JSON.parse(response.body)
-    binding.pry
     ENV['MASTER_TOKEN'] = refresh['access_token']
   end
 

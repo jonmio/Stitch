@@ -1,5 +1,5 @@
 desc "Refresh the newsfeed"
-task :friendship_maker => [:environment] do
+task :makefriendship => [:environment] do
   User.update_newsfeed_all_users
   User.update_reminders_all_contacts
   Misc.refresh_master_token

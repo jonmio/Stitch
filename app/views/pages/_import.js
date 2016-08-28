@@ -1,5 +1,4 @@
 $(function() {
-  alert("page loaded")
     $.ajax({
       method: "GET",
       url: "/import_contacts.json",
@@ -41,6 +40,7 @@ $(function() {
       })
       alert('out of for loop')
       $(document).ajaxStop(function () {
+        alert("ajax stop")
         window.location.replace("/link_to_twitter")
       });
     })

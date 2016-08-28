@@ -56,7 +56,6 @@ class PagesController < ApplicationController
   end
 
   def newsfeed
-    raise "error"
     @contacts = current_user.contacts
   end
 

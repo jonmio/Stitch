@@ -37,8 +37,8 @@ $(function() {
             })
         }
       })
-      
-      if ($(".selected") === []){
+
+      if ($(".selected").length === 0){
         window.location.replace("/link_to_twitter")
       }
       else {

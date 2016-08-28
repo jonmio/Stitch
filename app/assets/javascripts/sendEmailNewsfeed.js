@@ -3,6 +3,7 @@ $(document).ready(function() {
     event.preventDefault();
     var subject = $("#subject_field").val()
     var body = $("#body_field").val()
+    var receiver = $("#email_field").val()
 
     if (receiver == ""){
       alert("Contact has no email")

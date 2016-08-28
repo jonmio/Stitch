@@ -1,5 +1,4 @@
 $(function() {
-
     $.ajax({
       method: "GET",
       url: "/import_contacts.json",
@@ -39,7 +38,7 @@ $(function() {
             })
         }
       })
-      
+
       $(document).ajaxStop(function () {
         window.location.replace("/link_to_twitter")
       });

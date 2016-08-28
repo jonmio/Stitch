@@ -100,8 +100,6 @@ class User < ActiveRecord::Base
     case reminder_platform
       when "Email"
         Misc.automated_email(self, contact)
-      when "Twitter"
-        Misc.send_automated_dm(self, contact)
       when "Text"
         Misc.automated_text(self, contact)
     end

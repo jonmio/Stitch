@@ -1,11 +1,12 @@
 $(function() {
+  alert("page loaded")
     $.ajax({
       method: "GET",
       url: "/import_contacts.json",
       datatype: "json"
     }).done(function(response){
       console.log(response)
-      window.all_contacts = response
+      window.all_contacts = response ? response : []
       response.forEach(load_imported_contacts);
       clickable();
     });
@@ -24,9 +25,9 @@ $(function() {
     });
 
     $("#import_contact_button").click(function(e){
+      alert("clicked")
       $("#import_contact_button").attr('id',"");
       e.preventDefault()
-
       window.all_contacts.forEach(function(contact){
         if (contact.selected === true){
           contact.category = 'friend'
@@ -38,7 +39,7 @@ $(function() {
             })
         }
       })
-
+      alert('out of for loop')
       $(document).ajaxStop(function () {
         window.location.replace("/link_to_twitter")
       });

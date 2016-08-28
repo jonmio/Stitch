@@ -4,8 +4,7 @@ $(function() {
       url: "/import_contacts.json",
       datatype: "json"
     }).done(function(response){
-      console.log(response)
-      window.all_contacts = response ? response : []
+      window.all_contacts = response
       response.forEach(load_imported_contacts);
       clickable();
     });

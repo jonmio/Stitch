@@ -31,6 +31,11 @@ class PagesController < ApplicationController
       @auth_client.code = params[:code]
       #exchange auth for token
       @auth_client.fetch_access_token!
+      
+      puts params
+      puts @auth_client.inspect
+      puts @auth_client.methods
+
       if @auth_client.refresh_token != nil
         current_user.update({access_token: @auth_client.access_token, refresh_token: @auth_client.refresh_token, issued_at: @auth_client.issued_at})
       else

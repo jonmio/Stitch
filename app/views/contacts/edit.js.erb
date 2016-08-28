@@ -12,7 +12,7 @@ $("input[name='contact[email]']").val(email);
 $("input[name='contact[twitter_username]']").val(twitterUsername);
 $("input[name='contact[category]']").val(category);
 
-$("input[type='hidden']").attr('name', '_method');
-$("input[type='hidden']").attr('value', 'patch');
+// $("#edit_contact).append input[type='hidden']").attr('name', '_method');
+// $("#edit_contact input[type='hidden']").attr('value', 'patch');
 
-$("form").attr("action","/contacts/" + id);
+$("#edit_contact").attr("action","/contacts/" + id);

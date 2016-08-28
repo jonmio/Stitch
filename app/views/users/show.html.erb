@@ -12,6 +12,7 @@
         <h3 class="add-new-contact-heading">Edit Contact</h3>
         <h4 class='add-new-contact-heading-error'></h4>
       </div>
+      <input name="_method" type="hidden" value="patch">
       Name:  <br><%= f.text_field :name, class: 'field', id: 'contact-name'%><br>
       Phone: <br><%= f.text_field :phone,  class: 'field', id: 'contact-phone' %><br>
       Email: <br><%= f.email_field :email, class: 'field', id: 'contact-email' %><br>
@@ -36,7 +37,7 @@
       Email<br>
        <%= f.email_field :email, class: 'field' %><br>
       Category<br>
-       <%= f.select :category, [["Friend","friend"], ["Family","family"], ["Business","business"],["Other",'other']] %><br>
+       <%= f.select :category, [["Friend","friend"], ["Family","family"], ["Business","business"] %><br>
       Twitter Username <br>
        <%= f.text_field :twitter_username, class: 'field' %><br>
       <%= f.submit "Add Contact", class: 'modal-submit'%>

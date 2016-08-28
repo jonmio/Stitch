@@ -144,7 +144,7 @@ class Contact < ActiveRecord::Base
   def twenty_nine_days?
     message = messages.order(time_stamp: :desc).first
     #days since last interaction
-    days_since = reminders.first? reminders.first.time_since_last_contact : nil
+    days_since = reminders.first ? reminders.first.time_since_last_contact : nil
     if days_since == 29
       return true
     else
@@ -156,7 +156,7 @@ class Contact < ActiveRecord::Base
   def thirty_days?
     message = messages.order(time_stamp: :desc).first
     #days since last interaction
-    days_since = reminders.first? reminders.first.time_since_last_contact : nil
+    days_since = reminders.first ? reminders.first.time_since_last_contact : nil
     if days_since >= 30
       return true
     else

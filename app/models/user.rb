@@ -89,8 +89,10 @@ class User < ActiveRecord::Base
     contacts.each do |contact|
       if contact.thirty_days?
         contact.reach_out
+        puts "reaching out to #{contact.name}"
       elsif contact.twenty_nine_days?
         remind(contact)
+        puts "reminding #{name} about #{contact.name}"
       end
     end
   end

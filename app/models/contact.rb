@@ -25,6 +25,7 @@ class Contact < ActiveRecord::Base
       end
 
       Message.create(contact_id:id, user_id: user, time_stamp: Time.now.to_i, body_plain_text: user.automated_message, snippet: user.automated_message.slice(0,94))
+      Reminder.destroy(Reminder.where(contact_id: id).first)
   end
 
   def get_dms(user_client)
@@ -143,7 +144,7 @@ class Contact < ActiveRecord::Base
   def twenty_nine_days?
     message = messages.order(time_stamp: :desc).first
     #days since last interaction
-    days_since = ((Time.now.to_i - message.time_stamp)/86400.0).floor
+    days_since = reminders.first? reminders.first.time_since_last_contact : nil
     if days_since == 29
       return true
     else
@@ -155,7 +156,7 @@ class Contact < ActiveRecord::Base
   def thirty_days?
     message = messages.order(time_stamp: :desc).first
     #days since last interaction
-    days_since = ((Time.now.to_i - message.time_stamp)/86400.0).floor
+    days_since = reminders.first? reminders.first.time_since_last_contact : nil
     if days_since >= 30
       return true
     else

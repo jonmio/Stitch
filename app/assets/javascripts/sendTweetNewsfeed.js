@@ -14,7 +14,7 @@ $(document).ready(function() {
       })
     }
     else {
-      alert("The user does not have a twitter handle, please add a valid twitter handle for the contact")
+      alert("The contact does not have a twitter handle, please add a valid twitter handle for the contact")
     }
   });
 });

@@ -24,7 +24,6 @@ $(function() {
     });
 
     $("#import_contact_button").click(function(e){
-      alert("clicked")
       $("#import_contact_button").attr('id',"");
       e.preventDefault()
       window.all_contacts.forEach(function(contact){
@@ -38,11 +37,15 @@ $(function() {
             })
         }
       })
-      alert('out of for loop')
-      $(document).ajaxStop(function () {
-        alert("ajax stop")
+      
+      if ($(".selected") === []){
         window.location.replace("/link_to_twitter")
-      });
+      }
+      else {
+        $(document).ajaxStop(function () {
+          window.location.replace("/link_to_twitter")
+        });
+      }
     })
 
 });

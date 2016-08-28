@@ -54,17 +54,17 @@ function clickable(){
     index = $(this).attr("id")
     $(this).toggleClass("selected")
     var state = window.all_contacts[index].selected
+
     if (state === true){
       window.all_contacts[index].selected = false
       $('.number_of_selected_contacts').text(parseInt($('.number_of_selected_contacts').text())-1)
     }
+
     else {
       window.all_contacts[index].selected = true
       $('.number_of_selected_contacts').text(parseInt($('.number_of_selected_contacts').text())+1)
-
     }
-
-  })
+  })  
 }
 
 

@@ -1,4 +1,4 @@
-  <% contact.messages.each do |m| %>
+  <% contact.messages.order(time_stamp: :desc).each do |m| %>
   <div class="individual-message-div">
     <% date = Date.strptime(m.time_stamp.to_s, '%s') %>
     <div class='message_from_contact'>From: <%= @contact.name %></div>

@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user.google_id = params[:email]
     @user.reminder_platform = "Email"
     @user.reach_out_platform = "Email"
-    @user.automated_message = "Hey! It's been a while since we last talked. How are things going?"
+    @user.automated_message = "Hey! Been a while since we last talked. How are things going?"
 
     if @user.save
       session[:user_id] = @user.id

@@ -9,7 +9,7 @@ class Misc < ActiveRecord::Base
 
   def self.automated_email(user,contact)
     subject = "You've been a pretty bad friend..."
-    body = "Hey #{user.name},\n Looks like you havent talked to #{contact.name.split(" ")[0]} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remind Team"
+    body = "Hey #{user.name},\nLooks like you havent talked to #{contact.name.split(" ")[0]} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Stitch Team"
 
     email = Mail.new do
       from "TheStitchTeam@gmail.com"

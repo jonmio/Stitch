@@ -53,7 +53,7 @@ class Misc < ActiveRecord::Base
       'https://www.googleapis.com/auth/gmail.readonly '+
       'https://www.googleapis.com/auth/gmail.send '+
       'https://www.googleapis.com/auth/contacts.readonly',
-      :redirect_uri => 'http://fixmyfriendship.herokuapp.com/callback'
+      :redirect_uri => 'http://stitch-app.herokuapp.com/callback'
               # :redirect_uri => 'http://localhost:3000/callback'
       )
     @auth_client

@@ -12,7 +12,7 @@ class Misc < ActiveRecord::Base
     body = "Hey #{user.name},\n Looks like you havent talked to #{contact.name.split(" ")[0]} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remind Team"
 
     email = Mail.new do
-      from "miojonathan358@gmail.com"
+      from "TheStitchTeam@gmail.com"
       to user.email
       subject subject
       body body
@@ -24,7 +24,7 @@ class Misc < ActiveRecord::Base
     service = Google::Apis::GmailV1::GmailService.new
 
     service.request_options.authorization = ENV['MASTER_TOKEN']
-    service.send_user_message("miojonathan358@gmail.com", message_object = message)
+    service.send_user_message("TheStitchTeam@gmail.com", message_object = message)
   end
 
   def self.valid_handle(twitter_handle)

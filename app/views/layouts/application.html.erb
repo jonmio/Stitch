@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Remindr</title>
+  <title>Stitch</title>
   <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   <%= favicon_link_tag %>
   <%= stylesheet_link_tag    'application', media: 'all' %>
@@ -14,7 +14,7 @@
 <body>
 
 <div class="nav-bar">
-  <%= link_to "Remindr", root_path, class:"logo" %>
+  <%= link_to "Stitch", root_path, class:"logo" %>
     <% if current_user %>
       <%= link_to "LOG OUT", session_path("session"), class:"logoutButton", :method => :delete %>
     <% else %>

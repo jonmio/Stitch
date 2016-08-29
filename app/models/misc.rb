@@ -90,7 +90,7 @@ class Misc < ActiveRecord::Base
     @client.account.messages.create({
       :from => '+16474928309',
       :to => number,
-      :body => "Hey #{user.name.split(" ")[0]}, \nLooks like you havent talked to #{contact.name} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remindr Team"
+      :body => "Hey #{user.name.split(" ")[0]}, \nLooks like you havent talked to #{contact.name} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Stitch Team"
     })
   end
 end

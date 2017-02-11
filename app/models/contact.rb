@@ -3,7 +3,7 @@ class Contact < ActiveRecord::Base
   validates :name, :user_id, presence: true
 
   has_many :messages
-  has_many :reminders
+  has_many :reminders #building custom reminders
   belongs_to :user
 
   #email a user's contacts that have been neglected

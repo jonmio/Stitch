@@ -33,6 +33,9 @@ $(function() {
       window.all_contacts.forEach(function(contact){
         if (contact.selected === true){
           contact.category = 'friend'
+          if (!(contact.name) && contact.email){
+            contact.name = contact.email.split("@")[0]
+          }
 
           $.ajax({
               url:"/contacts",

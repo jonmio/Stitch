@@ -9,10 +9,10 @@ class Misc < ActiveRecord::Base
 
   def self.automated_email(user,contact)
     subject = "You've been a pretty bad friend..."
-    body = "Hey #{user.name},\n Looks like you havent talked to #{contact.name.split(" ")[0]} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remind Team"
+    body = "Hey #{user.name},\nLooks like you havent talked to #{contact.name.split(" ")[0]} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Stitch Team"
 
     email = Mail.new do
-      from "miojonathan358@gmail.com"
+      from "TheStitchTeam@gmail.com"
       to user.email
       subject subject
       body body
@@ -24,7 +24,7 @@ class Misc < ActiveRecord::Base
     service = Google::Apis::GmailV1::GmailService.new
 
     service.request_options.authorization = ENV['MASTER_TOKEN']
-    service.send_user_message("miojonathan358@gmail.com", message_object = message)
+    service.send_user_message("TheStitchTeam@gmail.com", message_object = message)
   end
 
   def self.valid_handle(twitter_handle)
@@ -53,7 +53,7 @@ class Misc < ActiveRecord::Base
       'https://www.googleapis.com/auth/gmail.readonly '+
       'https://www.googleapis.com/auth/gmail.send '+
       'https://www.googleapis.com/auth/contacts.readonly',
-      :redirect_uri => 'http://fixmyfriendship.herokuapp.com/callback'
+      :redirect_uri => 'http://stitch-app.herokuapp.com/callback'
               # :redirect_uri => 'http://localhost:3000/callback'
       )
     @auth_client
@@ -90,7 +90,7 @@ class Misc < ActiveRecord::Base
     @client.account.messages.create({
       :from => '+16474928309',
       :to => number,
-      :body => "Hey #{user.name.split(" ")[0]}, \nLooks like you havent talked to #{contact.name} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Remindr Team"
+      :body => "Hey #{user.name.split(" ")[0]}, \nLooks like you havent talked to #{contact.name} for almost a month. You should contact them soon or we'll be reaching out for you! \n \nThe Stitch Team"
     })
   end
 end

@@ -40,11 +40,8 @@ class PagesController < ApplicationController
       current_user.get_email_address
     end
 
-    if current_user.contacts.length > 0
-      redirect_to newsfeed_path
-    else
-      redirect_to permission_path
-    end
+    redirect_to permission_path
+
   end
 
   #import contacts for new user

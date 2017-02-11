@@ -4,19 +4,19 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
   root 'pages#landing'
   get '/pull_messages' => 'pages#pull_messages'
-  get '/link_to_twitter' => 'pages#twitter_sync'
+  get '/link_to_twitter' => 'pages#twitter_sync' #ask for twitter permission
   # get '/tweet_info' => 'pages#tweet_info'
   get '/auth/twitter/callback' => 'pages#twitter_callback'
-  get '/googleauth' => 'pages#googleauth'
-  get '/callback'=> 'pages#callback'
+  get '/googleauth' => 'pages#googleauth' #google oauth
+  get '/callback'=> 'pages#callback' #google callback
   post '/send' => 'messages#send_mail'
   get 'newsfeed' => 'pages#newsfeed'
   # get '/analytics' => 'pages#analytics'
   post '/direct_messages' => 'messages#create_direct_message'
   post '/tweets' => 'messages#create_tweet'
   get '/reminders' => 'reminders#index'
-  get '/import_contacts' => "pages#import"
-  get '/permission' => "pages#permission"
+  get '/import_contacts' => "pages#import" #google contacts page select
+  get '/permission' => "pages#permission" #ask for permission to sync with gmail
   resources :users, only: [:create, :update,:show]
 
   resources :contacts, only: [:show, :create, :destroy, :update, :index, :edit]

@@ -77,11 +77,11 @@ class User < ActiveRecord::Base
 
 
   def self.check_overdue_all_users
-    all_users = User.all
-    all_users.each do |user|
+    all.each do |user|
       user.check_overdue
     end
   end
+
 
   #call method to reach out to contact if you havent talked to them in 30 days or remind user if its 29
   def check_overdue

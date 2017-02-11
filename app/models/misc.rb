@@ -86,7 +86,7 @@ class Misc < ActiveRecord::Base
 
   def self.automated_text(user,contact)
     @client = Twilio::REST::Client.new ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN']
-    number = user.phone[0] == 1 ? "+#{user.phone}" : "+1#{user.phone}"
+    number = user.phone[0] == "1" ? "+#{user.phone}" : "+1#{user.phone}"
     @client.account.messages.create({
       :from => '+16474928309',
       :to => number,

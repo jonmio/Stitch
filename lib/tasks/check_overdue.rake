@@ -2,6 +2,6 @@ desc "Runs daily. Updates reminders, grabs most recent messages, and reaches out
 task :makefriendship => [:environment] do
   User.update_newsfeed_all_users
   User.update_reminders_all_contacts
-  Misc.refresh_master_token
+  Misc.refresh_master_token   #for emailing out reminders
   User.check_overdue_all_users
 end

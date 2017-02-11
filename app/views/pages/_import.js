@@ -33,6 +33,9 @@ $(function() {
       window.all_contacts.forEach(function(contact){
         if (contact.selected === true){
           contact.category = 'friend'
+          if (!(contact.name) && contact.email){
+            contact.name = contact.email.split("@")[0]
+          }
 
           $.ajax({
               url:"/contacts",
@@ -50,9 +53,10 @@ $(function() {
           window.location.replace("/link_to_twitter")
         });
 
-    })
+    }
 
-});
+  });
+})
 
 function clickable(){
   $(".potential-contacts").click(function(e){
@@ -73,8 +77,9 @@ function clickable(){
 }
 
 
+
 function load_imported_contacts(contact, index){
-  //refactor pls
+  //refactor
   if ( (contact.show === true) && (contact.selected === false) ){
     if (contact.name !== "") {
       $(".potential-contacts-container").append("<div id="+ index+ " class='potential-contacts'><h2 class='potential-contact-name'>"+contact.name+"</h2><h4 class='potential-contact-email'>"+contact.email+"</h4></div>")

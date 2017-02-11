@@ -1,4 +1,4 @@
-# Remindr
+# Stitch
 A personally-tailored friendship manager that prevents you from falling out of touch with people you care about.
 
 How?

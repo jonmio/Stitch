@@ -26,23 +26,15 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       redirect_to googleauth_path
-      @client = Twilio::REST::Client.new ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN']
-      @client.account.messages.create({
-        :from => '+16474928309',
-        :to => ENV['PHONE'],
-        :body => "New User"
-      })
+      # @client = Twilio::REST::Client.new ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN']
+      # @client.account.messages.create({
+      #   :from => '+16474928309',
+      #   :to => ENV['PHONE'],
+      #   :body => "New User"
+      # })
     else
       redirect_to root_path, flash: {signup_modal: true}
     end
-
-    # @client = Twilio::REST::Client.new ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN']
-    # @client.account.messages.create({
-    #   :from => '+16474928309',
-    #   :to => ENV['PHONE'],
-    #   :body => "New User"
-    # })
-
   end
 
 

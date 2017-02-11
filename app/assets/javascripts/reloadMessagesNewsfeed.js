@@ -1,3 +1,4 @@
+//loading effect
 $(document).on('ready', function() {
   $('#reload-messages').on('click', function(e) {
     $('.loading-modal').css('display', 'block');

@@ -64,8 +64,8 @@ class Contact < ActiveRecord::Base
 
     else
       if messages.all.length == 0
-      # Create a message with no body to start countdown of 30 days if there is no email for contact
-      Message.create(time_stamp:Time.now.to_i, contact_id: id, user_id: user.id, body_plain_text: "~", snippet: 'No available messages')
+        # Create a message with no body to start countdown of 30 days if there is no email for contact
+        Message.create(time_stamp:Time.now.to_i, contact_id: id, user_id: user.id, body_plain_text: "~", snippet: 'No available messages')
       end
     end
   end
@@ -76,17 +76,13 @@ class Contact < ActiveRecord::Base
     user_google_id = user.google_id
     #Query gmail to find email_id of last 5 emails
     email_ids = search_email(user_google_id, token)
-
+    emails = []
     if email_ids
-      emails = []
       email_ids.each do |id|
         emails << fetch_email(user_google_id, token, id)
       end
-      return emails
-
-    else
-      return []
     end
+    emails
   end
 
   #Finds email id of most recent outbound email from user to contact
@@ -111,6 +107,7 @@ class Contact < ActiveRecord::Base
     message = {}
     #Slice for unixtime in seconds because it is given in ms
     message['time_stamp'] = email['internalDate'].slice(0,10).to_i
+    #change to do in one pass
     message["snippet"] = email['snippet'].gsub("&lt;", "<").gsub("&gt;",">").gsub("&#39;", "'").gsub("&quot;", "\"")
 
     #hanles emails that have 1 part
@@ -170,12 +167,13 @@ class Contact < ActiveRecord::Base
     time_difference = (DateTime.now.strftime('%s').to_i) - (messages.order(time_stamp: :desc).first.time_stamp)
     #Status of interactions
     message_type = ( ((time_difference/86400) < 30) ? 'upcoming' : 'overdue')
+
     #Check if you should update an existing reminder or create a new one
-    if reminder= reminders.first
-      Reminder.destroy(reminder)
+    if reminders.first
+      Reminder.destroy(reminders.first)
     end
     if (time_difference/86400) > 4
-        Reminder.create(contact_id:id, reminder_type:message_type, message:messages.first.body_plain_text, time_since_last_contact:(time_difference/86400), user_id:user_id)
+        Reminder.create(contact_id:id, reminder_type:message_type, time_since_last_contact:(time_difference/86400), user_id:user_id)
     end
   end
 end

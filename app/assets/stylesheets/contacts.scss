@@ -8,7 +8,20 @@
 //   padding: 0;
 //   font-family: 'Helvetica-Neue', sans-serif;
 // }
-
+.cta{
+  text-align: center;
+}
+.permission{
+  font-size: 3em;
+  color: white;
+}
+.tacw{
+  text-align:center;
+  color: white;
+}
+.dn{
+  display: none;
+}
 #reload-messages {
   position: fixed;
   height: 30px;

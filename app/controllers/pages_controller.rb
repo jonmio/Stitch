@@ -41,7 +41,6 @@ class PagesController < ApplicationController
     end
 
     redirect_to permission_path
-
   end
 
   #import contacts for new user

@@ -5,10 +5,10 @@
 <% end %>
 
 <h1 class='remindertitle'> Import Contacts </h1><br>
-<p style="text-align: center;">Number of contacts chosen: <span class='number_of_selected_contacts'>0</span><p>
+<p class="cta">Number of contacts chosen: <span class='number_of_selected_contacts'>0</span><p>
 <a href="/" id="import_contact_button">Submit</a>
 
-<div style='text-align: center;'>
+<div class="cta" >
   <%= form_tag '/import_contacts',id:"search_imported_contacts" do %>
   <%= text_field_tag :search, params[:search], placeholder: "Search for contact", class: 'import-search-bar'%>
   <% end %>

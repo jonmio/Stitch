@@ -1,6 +1,6 @@
 <div class='reminder-background'></div>
 <div class='remindertitle'>
-  <h1 style='text-align:center;color:white'> All Reminders </h1>
+  <h1 class="tacw"> All Reminders </h1>
   <ul id='reminder-margin'>
   <% @reminders.each do |reminder| %>
     <% if current_user.contacts.where(id:reminder.contact_id).first != nil %>

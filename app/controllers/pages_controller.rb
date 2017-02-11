@@ -37,6 +37,7 @@ class PagesController < ApplicationController
       else
         current_user.update({access_token: @auth_client.access_token, issued_at: @auth_client.issued_at})
       end
+      #get gmail of the user. they might sign up with a non-google email
       current_user.get_email_address
     end
 

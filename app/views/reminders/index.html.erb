@@ -7,7 +7,7 @@
     <div class='reminderbox' data-identifier='contact_id-<%= reminder.contact_id %>'>
       <div id='<%= reminder.reminder_type %>'></div>
       <li id='reminder-days'> <%= reminder.time_since_last_contact %> days </li>
-      <li id='reminder-text'> Since you last contacted <%= current_user.contacts.where(id:reminder.contact_id).first["name"] %>
+      <li id='reminder-text'> Since you last contacted <%= Contact.find(reminder.contact_id)["name"] %>
     </div>
     <% end %>
   <% end %>
